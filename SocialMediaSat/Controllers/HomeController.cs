@@ -34,6 +34,7 @@ namespace SocialMediaSat.Controllers
         [HttpPost]
         public ActionResult Create(string text)
         {
+            Session["Handle"] = text; 
             int count = 10;
             var result = twitter.GetSpecificUserPost(text, count).Result;
             List<TwitObject> TweeitsList = MapResultToTweetList(result);
@@ -42,31 +43,56 @@ namespace SocialMediaSat.Controllers
                 TweetsList = TweeitsList
             };
 
-            ViewBag.Handle = text;
             Session["TweetObject"] = model;
             return View("TweetsList", model);
         }
 
-        //[HttpPost]
-        //public ActionResult CreateTrend(string text)
-        //{
-        //    //getting handel to compare
-        //    int count = 1;
-        //    var result = twitter.GetSpecificUserPost(text, count).Result;
-        //    List<TwitObject> TweeitsList = MapResultToTweetList(result);
-        //    var model = new TweetListModel
-        //    {
-        //        TweetsList = TweeitsList
-        //    };
-        //    //get trending tags!
-        //    var trendingResult = twitter.GetDetroitTrends().Result;
-        //    List<string> trendsList = MapResultToTrendingList(trendingResult);
+        [HttpGet]
+        public ActionResult CompareTags(int Hashtags)
+        {
+            int points = 0;
+            var TweetModel = Session["TweetObject"] as TweetListModel;
+            List<string> tags = new List<string> { };
+            
+            //pull out hashtags from tweet and add to a secondary list, not nessesary but cle
+            foreach (var item in TweetModel.TweetsList[Hashtags].Entities.Hashtags)
+            {
+                tags.Add(item.Text);
+            }
 
-        //    //compare twitter handle hastags to trending hash tags.
+            var result = twitter.GetListOfTrends("Detroit", 10).Result;
+            var obj = JArray.Parse(result);
+            var strResults = obj[0].ToString();
+            var model = MapResultToTrendList(strResults);
 
-        //    Session["TweetObject"] = model;
-        //    return View("TweetsList", model);
-        //}
+            foreach (var tgitem in tags)
+            {
+                foreach (var tdItem in model.Trends)
+                {
+                    tdItem.Name = tdItem.Name.Replace("#", "");
+                    if (tgitem.ToLower() == tdItem.Name.ToLower())
+                    {
+                        points++;
+                    }
+                }
+            }
+
+            if (points <= 1)
+            {
+                ViewBag.Trend = "The tags you are using are not trending " + points;
+            }
+            else if (points > 1 && points <= 3)
+            {
+                ViewBag.Trend = "Off to a good start, but there is room for improvement";
+            }
+            else if (points > 3 && points <= 5)
+            {
+                ViewBag.Trend = "Nice! You are on par with top trends!";
+            }
+            else { ViewBag.Tweet = "Way to be a Social Media Satilite Rockstar!"; }
+
+            return View("TweetsList", TweetModel);
+        }
 
         [HttpGet]
         public ActionResult Messages(string Likes, string Retweets, string Tweet)
@@ -104,6 +130,63 @@ namespace SocialMediaSat.Controllers
         }
 
         [HttpGet]
+        public ActionResult SuperCompare()
+        {
+            int hashPoints = 1;
+            int likes = 0;
+            int retweets = 0;
+            var TweetModel = Session["TweetObject"] as TweetListModel;
+            List<string> tags = new List<string> { };
+
+            //pull out hashtags from tweet and add to a secondary list, not nessesary but cle
+            foreach (var item in TweetModel.TweetsList)
+            {
+                if(int.TryParse(item.Likes, out int temp))
+                {
+                    likes += temp;
+                }
+                if (int.TryParse(item.Retweets, out int temp2))
+                {
+                    retweets += temp2;
+                }
+                foreach (var tag in item.Entities.Hashtags)
+                {
+                    tags.Add(tag.Text);
+                }
+
+            }
+
+            var result = twitter.GetListOfTrends("Detroit", 10).Result;
+            var obj = JArray.Parse(result);
+            var strResults = obj[0].ToString();
+            var model = MapResultToTrendList(strResults);
+
+            foreach (var tgitem in tags)
+            {
+                foreach (var tdItem in model.Trends)
+                {
+                    tdItem.Name = tdItem.Name.Replace("#", "");
+                    if (tgitem.ToLower() == tdItem.Name.ToLower())
+                    {
+                        hashPoints++;
+                    }
+                }
+            }
+
+            likes = (int)Math.Sqrt(likes);
+            likes = (int)Math.Sqrt(likes);
+
+            retweets = (int)Math.Sqrt(retweets);
+            retweets = (int)Math.Sqrt(retweets);
+
+            hashPoints = (int)Math.Pow(hashPoints, 2);
+
+            ViewBag.Score = (likes + retweets + hashPoints) + "";
+
+            return View("TweetsList", TweetModel);
+        }
+
+        [HttpGet]
         public ActionResult Trends(List<TrendList> Trends)
         {
             var result = twitter.GetListOfTrends("Detroit", 10).Result;
@@ -114,9 +197,24 @@ namespace SocialMediaSat.Controllers
             return View(model);
         }
 
+        public ActionResult Error()
+        {
+            return View();
+        }
+
         private List<TwitObject> MapResultToTweetList(string result)
         {
-            return JsonConvert.DeserializeObject<List<TwitObject>>(result);
+            try
+            {
+                return JsonConvert.DeserializeObject<List<TwitObject>>(result);
+            }
+            catch (Exception)
+            {
+                List<TwitObject> empty = new List<TwitObject> { };
+                return empty;
+
+            }
+
         }
 
         private TrendList MapResultToTrendList(string result)
@@ -126,7 +224,6 @@ namespace SocialMediaSat.Controllers
 
         public ActionResult TweetsList(List<TwitObject>TweetsList)
         {
-
             ViewBag.tweetsList = TweetsList;
             return View();
         }
