@@ -86,10 +86,5 @@ input[type=submit], input[type=submit]:hover {
     padding: 2% 2%;
     border-radius: 25px;
     background: #D1E8E2;
-    flex: 1 1 80px;
-}
-
-.white-text{
-    color: #fff;
-    font-weight: bolder;
+    flex: 1 1 250px;
 }
