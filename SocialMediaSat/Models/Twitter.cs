@@ -58,5 +58,17 @@ namespace SocialMediaSat
             dynamic item = serializer.Deserialize<object>(json);
             return item["access_token"];
         }
+        public async Task<string> GetListOfTrends(string trends, int count, string accessToken = null)
+        {
+            if (accessToken == null)
+            {
+                accessToken = await GetAccessToken();
+            }
+            var requestTrends = new HttpRequestMessage(HttpMethod.Get, string.Format("https://api.twitter.com/1.1/trends/place.json?id=2391585", count, trends));
+            requestTrends.Headers.Add("Authorization", "Bearer " + accessToken);
+            var httpClient = new HttpClient();
+            HttpResponseMessage responseTrends = httpClient.SendAsync(requestTrends).Result;
+            return responseTrends.Content.ReadAsStringAsync().Result;
+        }
     }
 }
