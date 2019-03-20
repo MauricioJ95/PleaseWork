@@ -11,8 +11,7 @@ namespace SocialMediaSat.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
-
+    
     public partial class TweetGenerator
     {
         public string Username { get; set; }
