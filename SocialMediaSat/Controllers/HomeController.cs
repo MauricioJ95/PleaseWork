@@ -46,26 +46,52 @@ namespace SocialMediaSat.Controllers
             return View("TweetsList", model);
         }
 
-        //[HttpPost]
-        //public ActionResult CreateTrend(string text)
-        //{
-        //    //getting handel to compare
-        //    int count = 1;
-        //    var result = twitter.GetSpecificUserPost(text, count).Result;
-        //    List<TwitObject> TweeitsList = MapResultToTweetList(result);
-        //    var model = new TweetListModel
-        //    {
-        //        TweetsList = TweeitsList
-        //    };
-        //    //get trending tags!
-        //    var trendingResult = twitter.GetDetroitTrends().Result;
-        //    List<string> trendsList = MapResultToTrendingList(trendingResult);
+        [HttpGet]
+        public ActionResult CompareTags(int Hashtags)
+        {
+            int points = 0;
+            var TweetModel = Session["TweetObject"] as TweetListModel;
+            List<string> tags = new List<string> { };
+            
+            //pull out hashtags from tweet and add to a secondary list, not nessesary but cle
+            foreach (var item in TweetModel.TweetsList[Hashtags].Entities.Hashtags)
+            {
+                tags.Add(item.Text);
+            }
 
-        //    //compare twitter handle hastags to trending hash tags.
+            var result = twitter.GetListOfTrends("Detroit", 10).Result;
+            var obj = JArray.Parse(result);
+            var strResults = obj[0].ToString();
+            var model = MapResultToTrendList(strResults);
 
-        //    Session["TweetObject"] = model;
-        //    return View("TweetsList", model);
-        //}
+            foreach (var tgitem in tags)
+            {
+                foreach (var tdItem in model.Trends)
+                {
+                    tdItem.Name = tdItem.Name.Replace("#", "");
+                    if (tgitem.ToLower() == tdItem.Name.ToLower())
+                    {
+                        points++;
+                    }
+                }
+            }
+
+            if (points <= 1)
+            {
+                ViewBag.Trend = "The tags you are using are not trending " + points;
+            }
+            else if (points > 1 && points <= 3)
+            {
+                ViewBag.Like = "Off to a good start, but there is room for improvement";
+            }
+            else if (points > 3 && points <= 5)
+            {
+                ViewBag.Tweet = "Nice! You are on par with top trends!";
+            }
+            else { ViewBag.Tweet = "Way to be a Social Media Satilite Rockstar!"; }
+
+            return View("TweetsList", TweetModel);
+        }
 
         [HttpGet]
         public ActionResult Messages(string Likes, string Retweets, string Tweet)

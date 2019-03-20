@@ -23,6 +23,11 @@
             <p>For your Tweet: </p> @ViewBag.Tweet
             <p>Your Likes are :</p> @ViewBag.Like
         }
+        @if (ViewBag.Trend != null)
+        {
+            <h2>Trending Results</h2>
+            <p>@ViewBag.Trend</p>
+        }
 
 
     </div>
@@ -51,11 +56,8 @@
 
                 @if (Model.TweetsList[i].Entities.Hashtags.Count != 0)
                 {
-                    <form action="/Home/Compare/" method="get">
-                        <input type="hidden" name="Tweet" value="@Model.TweetsList[i].Text" />
-                        <input type="hidden" name="Likes" value="@Model.TweetsList[i].Likes" />
-                        <input type="hidden" name="Retweets" value="@Model.TweetsList[i].Retweets" />
-                        <input type="hidden" name="Hashtags" value="@Model.TweetsList[i].Entities" />
+                    <form action="/Home/CompareTags/" method="get">
+                        <input type="hidden" name="Hashtags" value="@i" />
                         <input type="submit" value="Compare Trending" />
                         <p></p>
                     </form>
