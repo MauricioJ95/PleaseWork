@@ -64,6 +64,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -137,6 +139,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BusinessLogic\MessageLogic.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TweetGeneratorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -144,6 +147,24 @@
     <Compile Include="Models\HashtagModel.cs" />
     <Compile Include="Models\TrendList.cs" />
     <Compile Include="Models\TrendModel.cs" />
+    <Compile Include="Models\TweetDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TweetDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TweetDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TweetDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TweetDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TweetDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TweetGenerator.cs">
+      <DependentUpon>TweetDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TweetListModel.cs" />
     <Compile Include="Models\TwitObject.cs" />
     <Compile Include="Models\Twitter.cs" />
@@ -158,8 +179,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\TweetDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TweetDB.edmx</DependentUpon>
+      <LastGenOutput>TweetDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\TweetDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TweetDB.edmx</DependentUpon>
+      <LastGenOutput>TweetDB.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\TweetDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TweetDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\TweetDB.edmx.diagram">
+      <DependentUpon>TweetDB.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -188,6 +226,12 @@
     <Content Include="Views\Home\TweetsList.cshtml" />
     <Content Include="Views\Home\Analytics.cshtml" />
     <Content Include="Views\Home\Trends.cshtml" />
+    <Content Include="Views\Home\RandomTweet.cshtml" />
+    <Content Include="Views\TweetGenerators\Create.cshtml" />
+    <Content Include="Views\TweetGenerators\Delete.cshtml" />
+    <Content Include="Views\TweetGenerators\Details.cshtml" />
+    <Content Include="Views\TweetGenerators\Edit.cshtml" />
+    <Content Include="Views\TweetGenerators\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -204,6 +248,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
