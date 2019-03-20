@@ -4,12 +4,12 @@
     ViewBag.Title = "Trends";
 }
 
-<h2>Trends</h2>
-<div id="trend-list">
-    <div class="row">
+<h2 style="color:#FFCB9A">Trends</h2>
+<div >
+    <div id="ReturnParent" >
         @{ foreach (var trend in Model.Trends)
             {
-                <div class="col-md-6">
+                <div id="SearchReturn">
                     <p class="white-text">Name: @trend.Name</p>
                     <p class="white-text">Url: <a href="@trend.Url">@trend.Url</a></p>
                     <p class="white-text">Promoted Content: @trend.PromotedContent</p>
