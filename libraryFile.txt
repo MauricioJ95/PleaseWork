@@ -1,0 +1,12 @@
+In Search of Lost Time;Marcel Proust;False;12/31/2099 12:00:00 AM
+Don Quixote;Miguel de Cervantes;False;12/31/2099 12:00:00 AM
+Ulysses;James Joyce;False;12/31/2099 12:00:00 AM
+The Great Gatsby;F.Scott Fitzgerald;False;12/31/2099 12:00:00 AM
+Moby Dick;Herman Melville;False;12/31/2099 12:00:00 AM
+Hamlet;William Shakespeare;False;12/31/2099 12:00:00 AM
+War and Peace;Leo Tolstoy;False;12/31/2099 12:00:00 AM
+The Odyssey;Homer;False;12/31/2099 12:00:00 AM
+Lolita;Vladimir Nabokov;False;12/31/2099 12:00:00 AM
+On the Road;Jack Kerouac;False;12/31/2099 12:00:00 AM
+Breakfast of champions;Kurt Vonnegut;False;12/31/2099 12:00:00 AM
+The Alchemist;Paulo Coelho;False;12/31/2099 12:00:00 AM

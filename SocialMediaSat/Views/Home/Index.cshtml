@@ -1,0 +1,25 @@
+﻿@{ ViewBag.Title = "TweetForm";}
+<div id="SearchParent">
+
+    <div id="SearchBox">
+        <h4>Enter Twitter Handle</h4>
+
+        @using (@Html.BeginForm("Create", "Home", FormMethod.Post))
+        {
+
+            <input type="text" name="text" maxlength="15" input pattern="^[A-Za-z0-9_]{1,15}$" />
+            <input type="submit">
+
+        }
+    </div>
+
+    <div id="SearchInfo">
+        <h4>Welcome to SMS!</h4>
+        <p>Search your favorite Twitter Handle to see how they are performing!</p>
+        <p>Type in any Handle by providing an alphanumeric string and underscores only.</p>
+        <p>Also, all handles are 15 characters or less</p>
+    </div>
+
+	
+</div>
+

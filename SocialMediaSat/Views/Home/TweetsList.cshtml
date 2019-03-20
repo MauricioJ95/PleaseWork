@@ -1,0 +1,56 @@
+﻿@Model SocialMediaSat.Models.TweetListModel
+@{ ViewBag.Title = "TweetForm";}
+<div id="SearchParent">
+
+    <div id="SearchBox">
+        <h4>Enter Twitter Handle</h4>
+
+        @using (@Html.BeginForm("Create", "Home", FormMethod.Post))
+        {
+                <input type="text" name="text" maxlength="15" input pattern="^[A-Za-z0-9_]{1,15}$" />
+                <input type="submit">
+        }
+    </div>
+
+    <div id="SearchInfo">
+        <h4>Welcome to SMS!</h4>
+        <p>Search your favorite Twitter Handle to see how they are performing!</p>
+        <p>Type in any Handle by providing an alphanumeric string and underscores only.</p>
+        <p>Also, all handles are 15 characters or less</p>
+        @if (ViewBag.Tweet != null)
+        {
+            <h2>Analytics</h2>
+            <p>For your Tweet: </p> @ViewBag.Tweet
+            <p>Your Likes are :</p> @ViewBag.Like
+        }
+    </div>
+</div>
+
+@if (!(Model == null))
+{
+<h2 style="color:#FFCB9A">TweetsList</h2>
+<div id="ReturnParent">
+    @for (int i = 0; i < ((IEnumerable<dynamic>)Model.TweetsList).Count(); i++)
+    {
+    <div id="SearchReturn">
+        <form action="/Home/Messages/" method="get">
+            <p>Status: @Model.TweetsList[i].Text</p>
+            <p>Likes: @Model.TweetsList[i].Likes</p>
+            <p>Retweets: @Model.TweetsList[i].Retweets</p>
+            <p>Hashtags:  @Model.TweetsList[i].Entities.HashTagsDisplay</p>
+            <input type="hidden" name="Tweet" value="@Model.TweetsList[i].Text" />
+            <input type="hidden" name="Likes" value="@Model.TweetsList[i].Likes" />
+            <input type="hidden" name="Retweets" value="@Model.TweetsList[i].Retweets" />
+            <input type="submit" />
+            <p></p>
+        </form>
+    </div>
+    if (i % 4 == 0)
+    {<br />}
+    }
+</div>
+}
+
+
+
+

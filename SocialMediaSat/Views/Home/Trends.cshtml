@@ -1,0 +1,22 @@
+﻿@Model SocialMediaSat.Models.TrendList
+
+@{
+    ViewBag.Title = "Trends";
+}
+
+<h2>Trends</h2>
+<div id="trend-list">
+    <div class="row">
+        @{ foreach (var trend in Model.Trends)
+            {
+                <div class="col-md-6">
+                    <p class="white-text">Name: @trend.Name</p>
+                    <p class="white-text">Url: <a href="@trend.Url">@trend.Url</a></p>
+                    <p class="white-text">Promoted Content: @trend.PromotedContent</p>
+                    <p class="white-text">Query: @trend.Query</p>
+                    <p class="white-text">Tweet Volume: @trend.TweetVolume</p>
+                </div>
+            }
+        }
+    </div>
+</div>
