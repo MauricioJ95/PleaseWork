@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
+//get tweets from 
 namespace SocialMediaSat.Controllers
 {
     public class HomeController : Controller
@@ -28,6 +29,7 @@ namespace SocialMediaSat.Controllers
             return View();
         }
 
+        //passing the user input called text, then place in viewbag (using foreach loop) 
         //Method to take (text) from the user input and generate a list - display list in our view bag
         [HttpPost]
         public ActionResult Create(string text)
@@ -40,9 +42,31 @@ namespace SocialMediaSat.Controllers
                 TweetsList = TweeitsList
             };
 
+            ViewBag.Handle = text;
             Session["TweetObject"] = model;
             return View("TweetsList", model);
         }
+
+        //[HttpPost]
+        //public ActionResult CreateTrend(string text)
+        //{
+        //    //getting handel to compare
+        //    int count = 1;
+        //    var result = twitter.GetSpecificUserPost(text, count).Result;
+        //    List<TwitObject> TweeitsList = MapResultToTweetList(result);
+        //    var model = new TweetListModel
+        //    {
+        //        TweetsList = TweeitsList
+        //    };
+        //    //get trending tags!
+        //    var trendingResult = twitter.GetDetroitTrends().Result;
+        //    List<string> trendsList = MapResultToTrendingList(trendingResult);
+
+        //    //compare twitter handle hastags to trending hash tags.
+
+        //    Session["TweetObject"] = model;
+        //    return View("TweetsList", model);
+        //}
 
         [HttpGet]
         public ActionResult Messages(string Likes, string Retweets, string Tweet)
@@ -79,23 +103,6 @@ namespace SocialMediaSat.Controllers
             return View("TweetsList", TweetModel);
         }
 
-        private List<TwitObject> MapResultToTweetList(string result)
-        {
-            return JsonConvert.DeserializeObject<List<TwitObject>>(result);
-        }
-
-        public ActionResult TweetsList(List<TwitObject>TweetsList)
-        {
-
-            ViewBag.tweetsList = TweetsList;
-            return View();
-        }
-
-        private TrendList MapResultToTrendList(string result)
-        {
-            return JsonConvert.DeserializeObject<TrendList>(result);
-        }
-
         [HttpGet]
         public ActionResult Trends(List<TrendList> Trends)
         {
@@ -103,8 +110,25 @@ namespace SocialMediaSat.Controllers
             var obj = JArray.Parse(result);
             var strResults = obj[0].ToString();
             var model = MapResultToTrendList(strResults);
-            
+
             return View(model);
+        }
+
+        private List<TwitObject> MapResultToTweetList(string result)
+        {
+            return JsonConvert.DeserializeObject<List<TwitObject>>(result);
+        }
+
+        private TrendList MapResultToTrendList(string result)
+        {
+            return JsonConvert.DeserializeObject<TrendList>(result);
+        }
+
+        public ActionResult TweetsList(List<TwitObject>TweetsList)
+        {
+
+            ViewBag.tweetsList = TweetsList;
+            return View();
         }
 
 

@@ -16,11 +16,12 @@ namespace SocialMediaSat.Models
             get
             {
                 string display = "";
+                
                 foreach (var hashtag in Hashtags)
                 {
                     display += hashtag.Text + Environment.NewLine;
                 }
-
+                
                 return display;
             }
             set { HashTagsDisplay = value; }
