@@ -145,25 +145,25 @@
     </Compile>
     <Compile Include="Models\EntityModel.cs" />
     <Compile Include="Models\HashtagModel.cs" />
+    <Compile Include="Models\SMSDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SMSDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMSDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SMSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMSDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SMSDB.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\TrendList.cs" />
     <Compile Include="Models\TrendModel.cs" />
-    <Compile Include="Models\TweetDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TweetDB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TweetDB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TweetDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TweetDB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TweetDB.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\TweetGenerator.cs">
-      <DependentUpon>TweetDB.tt</DependentUpon>
+      <DependentUpon>SMSDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TweetListModel.cs" />
     <Compile Include="Models\TwitObject.cs" />
@@ -175,28 +175,31 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DownLeft.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\TweetDB.Context.tt">
+    <Content Include="Images\DownLeft.png" />
+    <Content Include="Images\UpRight.png" />
+    <Content Include="Models\SMSDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TweetDB.edmx</DependentUpon>
-      <LastGenOutput>TweetDB.Context.cs</LastGenOutput>
+      <DependentUpon>SMSDB.edmx</DependentUpon>
+      <LastGenOutput>SMSDB.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\TweetDB.tt">
+    <Content Include="Models\SMSDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TweetDB.edmx</DependentUpon>
-      <LastGenOutput>TweetDB.cs</LastGenOutput>
+      <DependentUpon>SMSDB.edmx</DependentUpon>
+      <LastGenOutput>SMSDB.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\TweetDB.edmx">
+    <EntityDeploy Include="Models\SMSDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TweetDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>SMSDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\TweetDB.edmx.diagram">
-      <DependentUpon>TweetDB.edmx</DependentUpon>
+    <Content Include="Models\SMSDB.edmx.diagram">
+      <DependentUpon>SMSDB.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\SocialMediaSat20190320020926 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\SocialMediaSat20190320020926 - Web Deploy1.pubxml" />
@@ -212,6 +215,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="UpRight.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
