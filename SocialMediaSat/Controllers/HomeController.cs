@@ -15,6 +15,7 @@ namespace SocialMediaSat.Controllers
 {
     public class HomeController : Controller
     {
+        private SMSDBEntities db = new SMSDBEntities();
         //declare a Twitter object to use inside of actionresults - gives auth 
         public Twitter twitter = new Twitter
         {
@@ -169,6 +170,12 @@ namespace SocialMediaSat.Controllers
             ViewBag.Message = "Analytics page!! what up!";
 
             return View();
+        }
+
+        public ActionResult RandomTweet()
+        {
+            TweetGenerator tm = db.TweetGenerators.Find("Shdwslayer22");
+            return View(tm);
         }
     }
 }
